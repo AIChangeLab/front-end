@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RAMCap Invest Agent – Upload your thesis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #2d7dd2;
+      --blue-light: #eef6ff;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #475569;
+      --yellow: #facc15;
+      --bg: #f8fafc;
+      --hero-bg: #fbf8f4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--hero-bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.4rem;
+      background: var(--hero-bg);
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #1d4ed8, #22d3ee);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 22px rgba(30, 64, 175, 0.25);
+    }
+
+    .nav-note {
+      font-size: 0.9rem;
+      color: #475569;
+    }
+
+    .hero {
+      background: var(--hero-bg);
+      color: var(--text);
+      padding: 2.8rem 1.5rem 2.4rem;
+    }
+
+    .hero-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .hero-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 0.6rem;
+      display: grid;
+      place-items: center;
+      color: #111827;
+      opacity: 0.95;
+    }
+
+    .hero h1 {
+      font-family: inherit;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+      line-height: 1.05;
+      color: #0f172a;
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      opacity: 1;
+      color: #6b7280;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .upload-card {
+      width: 100%;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.85rem;
+      box-shadow: 0 14px 38px rgba(15, 23, 42, 0.06);
+      padding: 2rem;
+    }
+
+    .upload-card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1.2rem;
+      color: #111827;
+      font-weight: 700;
+    }
+
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 0.85rem;
+      background: white;
+      padding: clamp(1.8rem, 3vw, 2.6rem);
+      text-align: center;
+      transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .dropzone:hover,
+    .dropzone.dragging,
+    .dropzone:focus-within {
+      border-color: #1d4ed8;
+      background: #f8fbff;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.08);
+    }
+
+    .drop-icon {
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      background: #1f2a44;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 0.9rem;
+      box-shadow: 0 10px 20px rgba(31, 42, 68, 0.22);
+    }
+
+    .drop-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      color: #111827;
+    }
+
+    .drop-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.65rem 1.2rem;
+      border-radius: 0.55rem;
+      border: 1px solid #d1d5db;
+      background: white;
+      color: #111827;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .btn.primary {
+      background: var(--yellow);
+      border-color: #eab308;
+    }
+
+    .btn.start {
+      background: #48bd93;
+      border-color: #3aa67f;
+      border: none;
+      color: #ffffff;
+    }
+
+    .btn:focus {
+      outline: 2px solid #1d4ed8;
+      outline-offset: 2px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .terms {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .terms a {
+      color: #1d4ed8;
+      text-decoration: none;
+    }
+
+    .terms a:hover {
+      text-decoration: underline;
+    }
+
+    .support {
+      margin-top: 1.4rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .file-pill {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.6rem;
+      padding: 0.65rem 0.75rem;
+      font-size: 0.95rem;
+      color: #111827;
+    }
+
+    .file-pill small {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .status-card {
+      margin-top: 1rem;
+      border: 1px solid #d6e1f0;
+      border-radius: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: #f1f5f9;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+    }
+
+    .status-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      background: #dcfce7;
+      color: #166534;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #16a34a;
+      box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.2);
+    }
+
+    .status-list {
+      display: grid;
+      gap: 0.35rem;
+      font-size: 0.92rem;
+      color: #0f172a;
+    }
+
+    .status-item {
+      position: relative;
+      padding-left: 1.4rem;
+      color: #475569;
+      transition: color 0.2s ease;
+    }
+
+    .status-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.4rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #cbd5e1;
+      box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .status-item.current {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .status-item.current::before {
+      background: #facc15;
+      box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.25);
+    }
+
+    .status-item.done {
+      color: #0f172a;
+    }
+
+    .status-item.done::before {
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.25);
+    }
+
+    .status-note {
+      margin-top: 0.5rem;
+      color: #475569;
+      font-size: 0.88rem;
+    }
+
+    .status-actions {
+      margin-top: 0.7rem;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .btn.small {
+      padding: 0.55rem 0.95rem;
+      font-size: 0.92rem;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+
+    .report-card {
+      margin-top: 1.25rem;
+      padding: 1.2rem 1.4rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.9rem;
+      background: linear-gradient(135deg, #f8fafc, #eef2ff);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .report-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .doc-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: #1d4ed8;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 18px rgba(30, 64, 175, 0.25);
+    }
+
+    .report-meta {
+      color: #475569;
+      font-size: 0.95rem;
+    }
+
+    .btn.download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.4rem;
+      width: 100%;
+      border-radius: 0.75rem;
+      border: none;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 16px 30px rgba(22, 163, 74, 0.22);
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .btn.download:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 36px rgba(22, 163, 74, 0.28);
+    }
+
+  </style>
+  <nav>
+    <div class="brand">
+      <span class="brand-mark">R</span>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-icon" aria-hidden="true">
+        <svg width="48" height="48" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Three ascending bars -->
+          <rect x="40" y="100" width="25" height="60" rx="3" fill="#d4c5b9" stroke="#111827" stroke-width="5"/>
+          <rect x="87.5" y="70" width="25" height="90" rx="3" fill="#d4c5b9" stroke="#111827" stroke-width="5"/>
+          <rect x="135" y="40" width="25" height="120" rx="3" fill="#d4c5b9" stroke="#111827" stroke-width="5"/>
+        </svg>
+      </div>
+      <h1>Investment Analyst Agents</h1>
+      <p>Our agents will review and validate your investment hypotheses.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="upload-card">
+      <h2>Upload your investment hypotheses</h2>
+      <form onsubmit="return false;">
+        <div id="dropzone" class="dropzone">
+          <div class="drop-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7.2 14.8c-1.5 0-2.7-1.23-2.7-2.75 0-1.2.76-2.27 1.86-2.63A5 5 0 0112.2 6c2.02 0 3.76 1.07 4.64 2.67.32-.11.66-.17 1.01-.17A3.66 3.66 0 0121.5 12c0 2.04-1.62 3.7-3.55 3.7H7.2z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 15V9.25m0 0L9.75 11.5M12 9.25l2.25 2.25" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="drop-title">Drag & drop your .docx or .pdf</div>
+          <div class="drop-sub">Max 25MB</div>
+          <input type="file" id="file-input" accept=".doc,.docx,.pdf,application/pdf" style="position:absolute; inset:0; opacity:0; cursor:pointer;" aria-label="Upload file" />
+        </div>
+        <div class="file-pill" id="file-pill" hidden>
+          <span id="file-name">No file selected</span>
+          <small id="file-size"></small>
+        </div>
+        <div class="status-card" id="upload-status" hidden>
+          <div class="status-header">
+            <div>
+              <div style="font-weight:700; color:#0f172a;">File received</div>
+              <div style="font-size:0.9rem; color:#475569;">Queued for agentic workflows</div>
+            </div>
+            <span class="badge">In queue</span>
+          </div>
+          <div class="status-list">
+            <div class="status-item">Review hypothesis & do additional research</div>
+            <div class="status-item">Assess and score likelihood</div>
+            <div class="status-item">Reviewed by senior analyst agents</div>
+            <div class="status-item">Generate final report</div>
+          </div>
+          <div class="status-note">ETA: under 2 minutes. Your report will appear here once ready.</div>
+          <div class="status-actions">
+            <button class="btn small start" type="button" id="start-analysis">Start analysis</button>
+            <button class="btn small ghost" type="button" id="upload-another">Upload another file</button>
+          </div>
+        </div>
+        <div class="report-card" id="report-card" hidden>
+          <div class="report-header">
+            <div class="doc-icon" id="report-file-icon">DOC</div>
+            <div>
+              <div style="font-weight:700; color:#0f172a;">Final Report</div>
+              <div class="report-meta"><span id="report-file-name">Uploaded file</span> · <span id="report-file-size">--</span></div>
+            </div>
+          </div>
+          <button class="btn download" type="button" id="download-btn">Download report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById("file-input");
+    const dropzone = document.getElementById("dropzone");
+    const pill = document.getElementById("file-pill");
+    const fileName = document.getElementById("file-name");
+    const fileSize = document.getElementById("file-size");
+    const statusCard = document.getElementById("upload-status");
+    const uploadAnother = document.getElementById("upload-another");
+    const startBtn = document.getElementById("start-analysis");
+    const steps = Array.from(document.querySelectorAll(".status-item"));
+    const badge = document.querySelector(".badge");
+    const reportCard = document.getElementById("report-card");
+    const reportFileIcon = document.getElementById("report-file-icon");
+    const reportFileName = document.getElementById("report-file-name");
+    const reportFileSize = document.getElementById("report-file-size");
+    const downloadBtn = document.getElementById("download-btn");
+    const STEP_DURATION = 5000;
+    let stepTimer = null;
+    let currentFile = null;
+
+    // Keep report card hidden on load
+    if (reportCard) {
+      reportCard.hidden = true;
+    }
+
+    function getFileTypeIcon(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      const iconMap = {
+        'pdf': 'PDF',
+        'doc': 'DOC',
+        'docx': 'DOC',
+        'txt': 'TXT',
+        'xlsx': 'XLS',
+        'xls': 'XLS',
+        'ppt': 'PPT',
+        'pptx': 'PPT',
+        'jpg': 'IMG',
+        'jpeg': 'IMG',
+        'png': 'IMG',
+        'gif': 'IMG'
+      };
+      return iconMap[ext] || 'FILE';
+    }
+
+    function setBadge(state) {
+      if (!badge) return;
+      if (state === "progress") {
+        badge.textContent = "In progress";
+        badge.style.background = "#fef9c3";
+        badge.style.color = "#92400e";
+      } else if (state === "done") {
+        badge.textContent = "Complete";
+        badge.style.background = "#dcfce7";
+        badge.style.color = "#166534";
+      } else {
+        badge.textContent = "In queue";
+        badge.style.background = "#dcfce7";
+        badge.style.color = "#166534";
+      }
+    }
+
+    function resetProgress() {
+      if (stepTimer) {
+        clearTimeout(stepTimer);
+        stepTimer = null;
+      }
+      steps.forEach(step => {
+        step.classList.remove("current");
+        step.classList.remove("done");
+      });
+      setBadge("queue");
+      if (reportCard) reportCard.hidden = true;
+      if (startBtn) {
+        startBtn.disabled = false;
+        startBtn.textContent = "Start analysis";
+      }
+    }
+
+    function runStep(index) {
+      if (!steps.length) return;
+      if (index === 0 && reportCard) {
+        reportCard.hidden = true;
+      }
+      if (index >= steps.length) {
+        steps.forEach(step => {
+          step.classList.add("done");
+          step.classList.remove("current");
+        });
+        setBadge("done");
+        if (reportCard) {
+          if (currentFile) {
+            reportFileIcon.textContent = getFileTypeIcon(currentFile.name);
+            reportFileName.textContent = currentFile.name;
+            reportFileSize.textContent = formatSize(currentFile.size);
+          }
+          reportCard.hidden = false;
+        }
+        if (startBtn) {
+          startBtn.disabled = false;
+          startBtn.textContent = "Restart analysis";
+        }
+        return;
+      }
+      steps.forEach((step, idx) => {
+        step.classList.toggle("current", idx === index);
+        step.classList.toggle("done", idx < index);
+      });
+      setBadge("progress");
+      if (startBtn) {
+        startBtn.disabled = true;
+        startBtn.textContent = "Running...";
+      }
+      stepTimer = setTimeout(() => runStep(index + 1), STEP_DURATION);
+    }
+
+    function formatSize(bytes) {
+      const units = ["B", "KB", "MB"];
+      let size = bytes;
+      let idx = 0;
+      while (size >= 1024 && idx < units.length - 1) {
+        size /= 1024;
+        idx += 1;
+      }
+      const precision = size >= 10 || idx === 0 ? 0 : 1;
+      return `${size.toFixed(precision)} ${units[idx]}`;
+    }
+
+    function showFile(file) {
+      if (!file) {
+        pill.hidden = true;
+        statusCard.hidden = true;
+        resetProgress();
+        currentFile = null;
+        return;
+      }
+      currentFile = file;
+      resetProgress();
+      fileName.textContent = file.name;
+      fileSize.textContent = formatSize(file.size);
+      pill.hidden = false;
+      statusCard.hidden = false;
+    }
+
+    input.addEventListener("change", () => showFile(input.files && input.files[0]));
+
+    ["dragenter", "dragover"].forEach(evt =>
+      dropzone.addEventListener(evt, e => {
+        e.preventDefault();
+        dropzone.classList.add("dragging");
+      })
+    );
+
+    ["dragleave", "drop"].forEach(evt =>
+      dropzone.addEventListener(evt, e => {
+        e.preventDefault();
+        dropzone.classList.remove("dragging");
+      })
+    );
+
+    dropzone.addEventListener("drop", e => {
+      const file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) {
+        input.files = e.dataTransfer.files;
+        showFile(file);
+      }
+    });
+
+
+    uploadAnother?.addEventListener("click", () => {
+      input.value = "";
+      pill.hidden = true;
+      statusCard.hidden = true;
+      resetProgress();
+    });
+
+    startBtn?.addEventListener("click", () => {
+      if (statusCard.hidden) return;
+      resetProgress();
+      runStep(0);
+    });
+
+    downloadBtn?.addEventListener("click", () => {
+      if (currentFile) {
+        const url = URL.createObjectURL(currentFile);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = currentFile.name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    });
+  </script>
+</body>
+</html>
